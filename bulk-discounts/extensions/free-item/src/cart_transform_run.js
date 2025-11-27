@@ -42,19 +42,25 @@ export function cartTransformRun(input) {
     if (giftLine) {
       if (giftLine.quantity !== parentQty) {
         operations.push({
-          type: "update_line",
-          id: giftLine.id,
-          quantity: parentQty,
+          lineUpdate: {
+            cartLineId: giftLine.id,
+            quantity: parentQty
+          }
         });
       }
     } else {
       operations.push({
-        type: "add_line",
-        merchandiseId: giftId,
-        quantity: parentQty,
+        lineAdd: {
+          merchandise: {
+            merchandiseId: giftId
+          },
+          quantity: parentQty
+        }
       });
     }
   }
+
+  console.log('operations', JSON.stringify(operations));
 
   return {
     operations
